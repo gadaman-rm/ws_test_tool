@@ -39,6 +39,7 @@ class WebSocketClient {
   }
 
   private toggleConnection(): void {
+    console.log('toggleConnection');
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.disconnect();
     } else {
@@ -58,7 +59,7 @@ class WebSocketClient {
     try {
       this.socket = new WebSocket(url);
       this.setupWebSocketEvents();
-      this.updateUIConnected();
+      this.updateUIConnecting();
     } catch (error) {
       alert('Invalid WebSocket URL.');
     }
@@ -76,11 +77,7 @@ class WebSocketClient {
     if (!this.socket) return;
 
     this.socket.onopen = () => {
-      this.statusText.textContent = 'Connected';
-      this.statusIndicator.classList.remove('disconnected');
-      this.statusIndicator.classList.add('connected');
-      this.connectBtn.textContent = 'Disconnect';
-      this.connectBtn.classList.add('connected');
+      this.updateUIConnected();
     };
 
     this.socket.onmessage = (event: MessageEvent) => {
@@ -104,18 +101,30 @@ class WebSocketClient {
     };
   }
 
-  private updateUIConnected(): void {
+  private updateUIConnecting(): void {
     this.statusText.textContent = 'Connecting...';
     this.connectBtn.disabled = true;
+    console.log('connect button disabled');
+  }
+
+  private updateUIConnected(): void {
+    this.statusText.textContent = 'Connected';
+    this.statusIndicator.classList.remove('disconnected');
+    this.statusIndicator.classList.add('connected');
+    this.connectBtn.textContent = 'Disconnect';
+    this.connectBtn.classList.add('connected');
+    this.connectBtn.disabled = false;
   }
 
   private updateUIDisconnected(): void {
+    console.log('updateUIDisconnected');
     this.statusText.textContent = 'Disconnected';
     this.statusIndicator.classList.remove('connected');
     this.statusIndicator.classList.add('disconnected');
     this.connectBtn.textContent = 'Connect';
     this.connectBtn.classList.remove('connected');
     this.connectBtn.disabled = false;
+    console.log('connect button enabled');
   }
 
   private sendMessage(): void {
