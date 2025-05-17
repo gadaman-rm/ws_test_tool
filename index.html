@@ -4,10 +4,54 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/main.ts"></script>
     <title>Ws Tool</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div class="container">
+      <header>
+        <h1>WebSocket Test Tool</h1>
+      </header>
+      <div class="connection-section">
+        <div class="address-bar">
+          <input
+            type="text"
+            id="address-input"
+            placeholder="Address (e.g., ws://localhost)"
+          />
+          <input
+            type="number"
+            id="port-input"
+            placeholder="Port"
+            min="1"
+            max="65535"
+          />
+          <button id="connect-btn" class="connect-btn">Connect</button>
+        </div>
+        <div class="connection-status">
+          <span id="status-text">Disconnected</span>
+          <div id="status-indicator" class="disconnected"></div>
+        </div>
+      </div>
+      <div class="message-section">
+        <div class="message-input">
+          <textarea
+            id="message-input"
+            placeholder="Enter message (JSON will be prettified)"
+          ></textarea>
+          <button id="send-btn" class="send-btn">Send</button>
+        </div>
+        <div class="message-lists">
+          <div class="message-list sent">
+            <h3>Sent Messages</h3>
+            <div id="sent-messages" class="message-content"></div>
+          </div>
+          <div class="message-list received">
+            <h3>Received Messages</h3>
+            <div id="received-messages" class="message-content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
